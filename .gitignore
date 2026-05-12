@@ -1,0 +1,9 @@
+__pycache__/
+venv/
+*.pyc
+pdfs_doj/
+training_data.jsonl
+epstein_jobs.db
+results/
+.env
+.DS_Store
