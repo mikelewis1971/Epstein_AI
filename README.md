@@ -1,3 +1,87 @@
+**Building an “Epstein AI”: Turning Public Court Documents into a Powerful Research Tool**
+
+A small team (and anyone who wants to join) is building a specialized AI system focused on the publicly available Jeffrey Epstein and Ghislaine Maxwell court records. We’re not chasing conspiracies — we’re building a serious, local, privacy-first research instrument.
+
+### Why This Matters
+
+The Epstein case files represent one of the most extensive public records of elite criminal networks, sex trafficking operations, financial dealings, and power structures in modern history. Thousands of pages — indictments, depositions, flight logs, financial records, victim statements, and unsealed documents from cases like *Giuffre v. Maxwell* and *United States v. Maxwell* — are already available through CourtListener/RECAP and recent releases under the Epstein Files Transparency Act.
+
+But raw PDFs are hard to search, cross-reference, and synthesize. Important connections hide in scanned documents, handwritten notes, or dense legal language. That’s where a specialized AI changes everything.
+
+### What an “Epstein AI” Can Actually Do for Research
+
+A fine-tuned model trained on these documents (combined with a strong RAG system) becomes an extraordinary research assistant. Here’s what it enables:
+
+- **Instant, accurate retrieval**: Ask natural-language questions like “What connections existed between Epstein’s financial entities and specific individuals in 2015–2019?” or “Summarize all mentions of island visits with dates and witnesses” and get grounded answers with page citations.
+
+- **Cross-document synthesis**: Link disparate facts across thousands of pages — flight logs, bank records, depositions, and emails — that no single human could keep in working memory.
+
+- **Timeline construction**: Automatically build chronological event maps, flagging inconsistencies or corroborations.
+
+- **Network analysis**: Identify clusters of names, organizations, and recurring locations with far greater speed and consistency than manual review.
+
+- **Pattern detection**: Highlight repeated tactics, financial flows, or recruitment methods described in the records.
+
+- **Counter-check claims**: Researchers, journalists, historians, or legal teams can rapidly verify statements against primary sources instead of relying on secondary summaries.
+
+- **Private local use**: Because it runs on your own hardware via LM Studio, you control the data. No cloud company sees your queries.
+
+This is the same principle that makes domain-specific AIs valuable in law, medicine, and finance: general models are broad but shallow. A specialized model becomes deep and precise on its corpus.
+
+### How We’re Building It (Open & Distributed)
+
+We’re using only **publicly available documents** from CourtListener and official releases.
+
+The pipeline:
+1. Distributed workers (your laptop, gaming PC, or cloud instance) claim PDFs via a central coordinator.
+2. Each page is rendered as a high-resolution image.
+3. Qwen2.5-VL (vision-language model) in LM Studio performs multi-pass transcription: three independent reads at different temperatures + one consensus synthesis pass for maximum accuracy.
+4. Cleaned text is saved as structured JSONL.
+5. Multiple contributors merge results (deduplicated).
+6. Build both a **RAG vector database** (for fast retrieval) and **fine-tune** smaller Qwen models (1.5B–7B) for continued pre-training or instruction tuning.
+7. Export back to GGUF for easy use in LM Studio.
+
+The entire stack is local-first, open-source friendly, and designed so hundreds of people can contribute processing power without centralizing sensitive work.
+
+### Who Benefits?
+
+- Investigative journalists digging into power and accountability.
+- Academic researchers studying elite deviance, trafficking networks, or judicial transparency.
+- Legal professionals and open-source intelligence analysts.
+- Historians documenting this chapter of 21st-century history.
+- Anyone who believes primary sources should be more accessible than sensational headlines.
+
+### Get Involved
+
+This is a “many hands make light work” project. You don’t need to be a machine learning expert:
+
+- Low-end machines can run the 2B–3B vision models.
+- Strong GPUs accelerate processing.
+- Non-technical people can help seed jobs, verify samples, or merge datasets.
+
+We have:
+- A FastAPI coordinator for job distribution.
+- Ready-to-run worker scripts tied to LM Studio.
+- Clear contribution guidelines coming soon.
+
+If you want to participate, stay tuned — I’ll share the GitHub repository once the initial system is hardened.
+
+### A Note on Responsibility
+
+We are strictly using public court records. The goal is transparency and better access to truth, not speculation or harm. Victim privacy and legal facts matter. Any high-quality research tool must respect that boundary.
+
+### The Bigger Idea
+
+This is a proof of concept for citizen-scale document intelligence. The same approach can be applied to other large public archives — FOIA releases, congressional records, historical collections. When powerful institutions hoard or obscure information, decentralized AI tooling helps level the playing field.
+
+**Knowledge should not require a law degree and months of reading to unlock.**
+
+Want to help process documents, improve the pipeline, or discuss use cases? Drop a comment or reach out. The more clean, structured data we create together, the more powerful (and truthful) the resulting research tools become.
+
+*This is an open project. All code and data pipelines will be shared publicly. Let’s do it right.*
+
+
+----------------------------------------------
 # Epstein_AI
 Turn the Epstien files into an AI by converting the documents to a RAG or training data
 
