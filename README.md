@@ -1,3 +1,191 @@
+**✅ Full Professional README.md**
+
+```markdown
+# Epstein Research AI Pipeline
+
+**Official Source:** [Department of Justice Epstein Library](https://www.justice.gov/epstein)
+
+An open, distributed, local-first project to transform the official U.S. Department of Justice Epstein Files into high-quality structured training data for specialized AI research tools.
+
+---
+
+## 🎯 Project Goals
+
+- Create clean, accurate transcriptions of millions of pages from official DOJ releases.
+- Build powerful **local research AIs** specialized on the Epstein Files.
+- Enable collaborative "many hands" processing using consumer hardware.
+- Support both **RAG** (fast retrieval) and **fine-tuned models** ("Epstein AI").
+- Maintain strict focus on **public records only**, transparency, and responsibility.
+
+---
+
+## ✨ Key Features
+
+- **Official DOJ Source** — All documents pulled from https://www.justice.gov/epstein (Epstein Files Transparency Act releases).
+- **Recursive Multi-Agent OCR** — Main text model (orchestrator) + Vision model with adaptive retries and quality judging.
+- **LM Studio Native** — Full compatibility with local OpenAI-compatible server.
+- **Distributed Coordinator** — FastAPI job queue for thousands of volunteer/contributor nodes.
+- **Deduplication & Resumable** — SHA-256 tracking prevents duplicate work.
+- **Output Formats** — Structured JSONL ready for RAG and fine-tuning.
+- **End Products**:
+  - High-quality RAG vector database
+  - Fine-tuned Qwen models (1.5B–14B) exportable to GGUF
+
+---
+
+## 🛠️ Tech Stack
+
+- **Vision Model**: Qwen2.5-VL-7B (or 3B/2B)
+- **Main Orchestrator Model**: Qwen2.5-7B or larger (text)
+- **Inference**: LM Studio (local server)
+- **PDF Rendering**: PyMuPDF (fitz)
+- **Coordinator**: FastAPI + SQLAlchemy (SQLite/PostgreSQL)
+- **Fine-tuning**: Unsloth / Hugging Face
+- **Storage**: Local + optional S3
+
+---
+
+## 📥 Quick Start
+
+### 1. Install LM Studio
+1. Download from [lmstudio.ai](https://lmstudio.ai)
+2. Search and download:
+   - `Qwen2.5-VL-7B-Instruct` (Vision)
+   - `Qwen2.5-7B-Instruct` (Main orchestrator — recommended)
+3. Load both models and **start the local server** (`http://localhost:1234/v1`)
+
+### 2. Clone & Setup
+```bash
+git clone <your-repo>
+cd epstein-ai-pipeline
+python -m venv venv
+source venv/bin/activate    # Windows: venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+### 3. Download Documents (Official DOJ)
+```bash
+python 1_download_doj.py
+```
+
+### 4. Run Processing (Recursive)
+```bash
+python 2_worker_recursive.py
+```
+
+### 5. Coordinator (for distributed work)
+```bash
+uvicorn coordinator.main:app --host 0.0.0.0 --port 8000
+```
+
+---
+
+## 📁 Project Structure
+
+```
+├── 1_download_doj.py                 # Official DOJ crawler + downloader
+├── 2_worker_recursive.py             # Recursive AI transcription pipeline
+├── coordinator/
+│   ├── main.py                       # FastAPI job server
+│   ├── database.py
+│   ├── schemas.py
+│   └── ...
+├── training_data/                    # Output JSONL files
+├── pdfs_doj/                         # Downloaded PDFs
+├── results/                          # Submitted worker results
+├── README.md
+└── requirements.txt
+```
+
+---
+
+## 🔄 Recursive AI Pipeline (Advanced)
+
+**How it works:**
+1. Main AI (text model) instructs Vision model.
+2. Vision model transcribes the page image.
+3. Main AI evaluates quality (completeness, accuracy, clarity).
+4. If quality is low → issues specific retry instructions + adjusted temperature.
+5. Repeats up to `MAX_RETRIES` (default 3).
+6. Main AI produces final polished transcription.
+
+This adaptive loop dramatically improves accuracy on scanned, redacted, and handwritten documents common in the DOJ releases.
+
+---
+
+## 🌐 Distributed Collaboration
+
+- Workers claim jobs from the central coordinator.
+- Process locally with LM Studio.
+- Submit cleaned JSONL snippets.
+- First valid submission wins — prevents duplicate work.
+- Merge all results into a master dataset.
+
+**Hardware Requirements:**
+- **Minimum**: 8GB RAM + Qwen2.5-VL-3B
+- **Recommended**: 12–24GB VRAM GPU + Qwen2.5-VL-7B + Qwen2.5-7B text
+
+---
+
+## 🚀 Post-Processing
+
+### RAG (Fast Search)
+Use LlamaIndex or LangChain + local embeddings on the final JSONL.
+
+### Fine-Tuning
+```bash
+python 3_finetune.py
+```
+Uses Unsloth for efficient LoRA fine-tuning → export GGUF for LM Studio.
+
+---
+
+## ⚠️ Important Notes
+
+- **Legal & Ethical**: Only using officially released public documents from the U.S. Department of Justice.
+- Many files contain sensitive content (including descriptions of sexual assault). Handle responsibly.
+- Respect rate limits when downloading from justice.gov.
+- Victim privacy and proper redactions are taken seriously.
+
+---
+
+## 🤝 How to Contribute
+
+- Run the worker on your machine
+- Host a coordinator instance
+- Improve scripts (better prompting, error handling, etc.)
+- Help merge & clean final dataset
+- Build RAG interfaces or analysis tools
+
+---
+
+## 📢 Project Links
+
+- Official Source: [https://www.justice.gov/epstein](https://www.justice.gov/epstein)
+- Blog Post: [link]
+- Facebook / Community: [link]
+
+---
+
+**This is a citizen transparency project.**  
+The better the data we create together, the more powerful and truthful the resulting research tools become.
+
+---
+
+*Last updated: May 2026*
+```
+
+---
+
+This README is complete, professional, and includes everything we've built. You can copy-paste it directly into your repo.
+
+Would you like me to also generate:
+- The updated `1_download_doj.py` (improved crawler)?
+- A `requirements.txt` file?
+- Or a shorter one-page version?
+
+Just let me know!
+
 **Building an “Epstein AI”: Turning Public Court Documents into a Powerful Research Tool**
 
 A small team (and anyone who wants to join) is building a specialized AI system focused on the publicly available Jeffrey Epstein and Ghislaine Maxwell court records. We’re not chasing conspiracies — we’re building a serious, local, privacy-first research instrument.
